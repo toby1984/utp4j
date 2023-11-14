@@ -14,6 +14,11 @@
 */
 package net.utp4j.data.bytes;
 
+import org.junit.jupiter.api.Test;
+import net.utp4j.data.bytes.exceptions.ByteOverflowException;
+import net.utp4j.data.bytes.exceptions.SignedNumberException;
+
+import static net.utp4j.data.bytes.BinaryToStringTestHelper.toBinaryString;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.MAX_UBYTE;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.MAX_UINT;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.MAX_USHORT;
@@ -22,15 +27,8 @@ import static net.utp4j.data.bytes.UnsignedTypesUtil.bytesToUshort;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUbyte;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUint;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUshort;
-import static net.utp4j.data.bytes.BinaryToStringTestHelper.toBinaryString;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
-
-import org.junit.Test;
-
-import net.utp4j.data.bytes.UnsignedTypesUtil;
-import net.utp4j.data.bytes.exceptions.ByteOverflowException;
-import net.utp4j.data.bytes.exceptions.SignedNumberException;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 
 public class UnsignedTypesUtilTest {
 

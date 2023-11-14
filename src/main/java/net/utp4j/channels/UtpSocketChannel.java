@@ -292,8 +292,8 @@ public abstract class UtpSocketChannel {
 	 *            the packet to be Acked
 	 * @param timedifference
 	 *            Between t1 and t2. t1 beeing the time the remote socket has
-	 *            sent this packet, t2 when this socket recieved the packet.
-	 *            Differences is <b>unsigned</b> and in µs resolution.
+	 *            sent this packet, t2 when this socket received the packet.
+	 *            Differences is <b>unsigned</b> and in us resolution.
 	 * @param advertisedWindow
 	 *            How much space this socket has in its temporary recieve buffer
 	 * @return ack packet

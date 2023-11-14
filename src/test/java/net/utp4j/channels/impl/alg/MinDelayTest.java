@@ -14,12 +14,9 @@
 */
 package net.utp4j.channels.impl.alg;
 
-import static org.junit.Assert.assertEquals;
+import org.junit.jupiter.api.Test;
 
-import org.junit.Test;
-
-import net.utp4j.channels.impl.alg.MinimumDelay;
-import net.utp4j.channels.impl.alg.UtpAlgConfiguration;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MinDelayTest {
 

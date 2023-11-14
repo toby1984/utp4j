@@ -14,15 +14,15 @@
 */
 package net.utp4j.data.bytes;
 
+import org.junit.jupiter.api.Test;
+
 import static net.utp4j.data.UtpPacketUtils.DATA;
 import static net.utp4j.data.UtpPacketUtils.FIN;
 import static net.utp4j.data.UtpPacketUtils.RESET;
 import static net.utp4j.data.UtpPacketUtils.STATE;
 import static net.utp4j.data.UtpPacketUtils.SYN;
 import static net.utp4j.data.UtpPacketUtils.joinByteArray;
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UtpPacketUtilsTest {
 	

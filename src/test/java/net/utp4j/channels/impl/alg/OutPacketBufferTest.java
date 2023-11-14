@@ -14,28 +14,23 @@
 */
 package net.utp4j.channels.impl.alg;
 
-import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUshort;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.util.Queue;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
+import org.junit.jupiter.api.Test;
 import net.utp4j.channels.impl.UtpTimestampedPacketDTO;
-import net.utp4j.channels.impl.alg.OutPacketBuffer;
 import net.utp4j.data.MicroSecondsTimeStamp;
 import net.utp4j.data.UtpPacket;
 import net.utp4j.data.UtpPacketUtils;
 
+import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUshort;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-@RunWith(org.mockito.runners.MockitoJUnitRunner.class)
+
 public class OutPacketBufferTest {
 	
 	private static int PAYLOAD_LENGTH = 1300;

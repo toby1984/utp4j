@@ -219,7 +219,7 @@ public class UtpPacket {
 		int extensionStartIndex = 20;
 		int totalLength = 0;
 		
-		ArrayList<UtpHeaderExtension> list = new ArrayList<UtpHeaderExtension>();
+		ArrayList<UtpHeaderExtension> list = new ArrayList<>();
 		UtpHeaderExtension extension = UtpHeaderExtension.resolve(extensionType);
 	
 		while (extension != null) {

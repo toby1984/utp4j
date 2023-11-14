@@ -5,41 +5,132 @@
   <version>0.0.1-SNAPSHOT</version>
   <name>Utp4J</name>
   <description>Micro Transport Protocol for Java</description>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <javac.source>21</javac.source>
+    <javac.target>21</javac.target>
+    <javac.release>21</javac.release>
+    <preview></preview>
+    <illegalAccess>--add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.nio=ALL-UNNAMED</illegalAccess>
+    <jdkModules></jdkModules>
+    <javac.compilation.options1>${preview}</javac.compilation.options1>
+    <javac.compilation.options2>-proc:none</javac.compilation.options2>
+    <java.runtime.options>-XX:+EnableDynamicAgentLoading ${preview} ${jdkModules} ${illegalAccess} -Dfile.encoding=${project.build.sourceEncoding}</java.runtime.options>
+    <junit.version>5.10.1</junit.version>
+    <slf4j.version>2.0.9</slf4j.version>
+  </properties>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-jar-plugin</artifactId>
+            <version>3.3.0</version>
+            <configuration>
+              <excludes>
+                <exclude>net/utp4j/examples/*</exclude>
+                <exclude>net/channel/impl/log/*</exclude>
+              </excludes>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
   <build>
     <plugins>
       <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
+        <artifactId>maven-source-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>attach-sources</id>
+            <phase>package</phase>
+            <goals><goal>jar-no-fork</goal></goals> 
+          </execution>
+        </executions>
+      </plugin>
+      <plugin> 
+        <artifactId>maven-javadoc-plugin</artifactId> 
         <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
+          <doclint>none</doclint>
+        </configuration>
+        <executions> 
+          <execution> 
+            <id>attach-javadocs</id>
+            <phase>package</phase>
+            <goals><goal>jar</goal></goals> 
+          </execution> 
+        </executions> 
+      </plugin>
+      <plugin> 
+        <!-- explicitly define maven-deploy-plugin after other to force exec order -->
+        <artifactId>maven-deploy-plugin</artifactId> 
+        <executions> 
+          <execution> 
+            <id>deploy</id>
+            <phase>deploy</phase>
+            <goals><goal>deploy</goal></goals> 
+          </execution> 
+        </executions> 
+      </plugin>
+      <plugin>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>${java.runtime.options}</argLine>
+          <forkCount>1C</forkCount>
+          <reuseForks>false</reuseForks>
+          <rerunFailingTestsCount>4</rerunFailingTestsCount>
+          <runOrder>failedfirst</runOrder>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.11.0</version>
+        <configuration>
+          <source>${javac.source}</source>
+          <target>${javac.target}</target>
+          <release>${javac.release}</release>
+          <encoding>UTF-8</encoding>
+          <compilerArgs>
+            <arg>${javac.compilation.options1}</arg>
+            <arg>${javac.compilation.options2}</arg>
+          </compilerArgs>
+          <showWarnings>false</showWarnings>
         </configuration>
       </plugin>
     </plugins>
   </build>
   <dependencies>
-  	<dependency>
-  		<groupId>org.mockito</groupId>
-  		<artifactId>mockito-all</artifactId>
-  		<version>1.8.4</version>
-  		<scope>test</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>junit</groupId>
-  		<artifactId>junit</artifactId>
-  		<version>4.11</version>
-  		<scope>test</scope>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>slf4j-api</artifactId>
-  		<version>1.7.5</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.slf4j</groupId>
-  		<artifactId>slf4j-log4j12</artifactId>
-  		<version>1.7.5</version>
-  	</dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-core</artifactId>
+      <version>5.7.0</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-api</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j.version}</version>
+    </dependency>
   </dependencies>
   <!--  exclude the package net.utp4j.channels.impl.log from the final build -->
   <!-- exculde net.utp4j.examples as well -->

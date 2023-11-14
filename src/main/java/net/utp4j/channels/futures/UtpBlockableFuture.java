@@ -63,5 +63,4 @@ public class UtpBlockableFuture {
 	public void unblock() {
 		semaphore.release();
 	}
-
 }

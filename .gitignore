@@ -1,3 +1,5 @@
+.surefire*
+.idea
 /bin
-/target
+target
 /codecover

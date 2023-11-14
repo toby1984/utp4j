@@ -14,34 +14,24 @@
 */
 package net.utp4j.channels.impl.alg;
 
-import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUshort;
-import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
 import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.Queue;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
+import org.junit.jupiter.api.Test;
 import net.utp4j.channels.impl.UtpTimestampedPacketDTO;
-import net.utp4j.channels.impl.alg.MinimumDelay;
-import net.utp4j.channels.impl.alg.OutPacketBuffer;
-import net.utp4j.channels.impl.alg.PacketSizeModus;
-import net.utp4j.channels.impl.alg.UtpAlgConfiguration;
-import net.utp4j.channels.impl.alg.UtpAlgorithm;
 import net.utp4j.data.MicroSecondsTimeStamp;
 import net.utp4j.data.SelectiveAckHeaderExtension;
-import net.utp4j.data.UtpHeaderExtension;
 import net.utp4j.data.UtpPacket;
 import net.utp4j.data.UtpPacketUtils;
 
-@RunWith(org.mockito.runners.MockitoJUnitRunner.class)
+import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUshort;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+
 public class UtpAlgorithmTest {
 
 	/**
@@ -97,7 +87,7 @@ public class UtpAlgorithmTest {
 		when(stamper.timeStamp()).thenReturn(0L);
 		
 		UtpAlgorithm algorithm = new UtpAlgorithm(stamper,  new InetSocketAddress(51235));
-		ByteBuffer bufferMock = mock(ByteBuffer.class);
+		ByteBuffer bufferMock = ByteBuffer.allocate( 1600 );
 		algorithm.setByteBuffer(bufferMock);
 		
 		// Add some packets, 4...14
@@ -161,8 +151,6 @@ public class UtpAlgorithmTest {
 		// no packets to resend
 		packetsToResend = algorithm.getPacketsToResend();
 		assertEquals(0, packetsToResend.size());
-		
-		
 	}
 	
 	private UtpTimestampedPacketDTO createSelAckPacket(int i, byte[] selAck) throws SocketException {
@@ -192,7 +180,7 @@ public class UtpAlgorithmTest {
 		when(stamper.timeStamp()).thenReturn(0L);
 		
 		UtpAlgorithm algorithm = new UtpAlgorithm(stamper,  new InetSocketAddress(51235));
-		ByteBuffer bufferMock = mock(ByteBuffer.class);
+		ByteBuffer bufferMock = ByteBuffer.allocate( 1600 );
 		algorithm.setByteBuffer(bufferMock);
 		
 		UtpTimestampedPacketDTO pkt = createPacket(5);
@@ -309,7 +297,8 @@ public class UtpAlgorithmTest {
 		
 		OutPacketBuffer outBuffer = mock(OutPacketBuffer.class);
 		when(outBuffer.getOldestUnackedTimestamp()).thenReturn(600000L);
-		when(outBuffer.getBytesOnfly()).thenReturn(20000); // 20 kB onfly
+		// TODO: Mockito 5.x throws UnnecessaryStubbingException on the next line so it is not actually being used...
+		// when(outBuffer.getBytesOnfly()).thenReturn(20000); // 20 kB onfly
 		algorithm.setCurrentWindow(20000);
 		algorithm.setOutPacketBuffer(outBuffer);
 		
@@ -322,8 +311,9 @@ public class UtpAlgorithmTest {
 		
 		assertEquals(100000, waitingTime);
 		
-		// now current window is below 20k. 
-		when(outBuffer.getBytesOnfly()).thenReturn(10000); // 20 kB onfly
+		// now current window is below 20k.
+		// TODO: Mockito 5.x throws UnnecessaryStubbingException on the next line so it is not actually being used...
+		// when(outBuffer.getBytesOnfly()).thenReturn(10000); // 20 kB onfly
 		algorithm.setCurrentWindow(10000);
 		
 		waitingTime = algorithm.getWaitingTimeMicroSeconds();

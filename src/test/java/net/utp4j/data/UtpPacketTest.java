@@ -14,20 +14,15 @@
 */
 package net.utp4j.data;
 
+import org.junit.jupiter.api.Test;
+
 import static net.utp4j.data.bytes.UnsignedTypesUtil.MAX_UBYTE;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.MAX_UINT;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.MAX_USHORT;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUbyte;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUint;
 import static net.utp4j.data.bytes.UnsignedTypesUtil.longToUshort;
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import net.utp4j.data.SelectiveAckHeaderExtension;
-import net.utp4j.data.UtpHeaderExtension;
-import net.utp4j.data.UtpPacket;
-import net.utp4j.data.UtpPacketUtils;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UtpPacketTest {
 
